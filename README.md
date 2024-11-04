@@ -13,7 +13,12 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
 
 ## Como Rodar o Projeto
 
-### 1. Configurar e Rodar o Back-End
+### 1. Configurar e Rodar o BD e Back-End
+
+0. Certifique-se de estar rodando o MongoDB:
+   ```bash
+   mongod
+   ```
 
 1. Navegue até o diretório do back-end:
    ```bash
