@@ -36,6 +36,9 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
    npm start
    ```
 6. O back-end estará disponível em `http://localhost:5000`.
+   Usuário e senha iniciais serão criados e inseridos automáticamente no BD.
+   usuário: fiap
+   senha: 12345
 
 ---
 
