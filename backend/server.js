@@ -28,7 +28,7 @@ async function createInitialUser() {
         role: 'admin'
       });
       await newUser.save();
-      console.log('Usuário inicial criado: fiap');
+      console.log('Usuário inicial criado: fiap / senha: 12345');
     } else {
       console.log('Usuário inicial já existe.');
     }

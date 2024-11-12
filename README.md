@@ -6,7 +6,7 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
 
 ## Requisitos
 
-- **Node.js** (versão 14 ou superior)
+- **Node.js** (versão 16.13)
 - **MongoDB** (instalado e em execução)
 
 ---
