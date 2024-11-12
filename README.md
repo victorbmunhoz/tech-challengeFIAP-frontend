@@ -13,7 +13,7 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
 
 ## Como Rodar o Projeto
 
-### 1. Configurar e Rodar o Back-End
+### 1. Configurar e Rodar o BD e Back-End
 
 1. Navegue até o diretório do back-end:
    ```bash
@@ -36,6 +36,9 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
    npm start
    ```
 6. O back-end estará disponível em `http://localhost:5000`.
+   Usuário e senha iniciais serão criados e inseridos automáticamente no BD.
+   usuário: fiap
+   senha: 12345
 
 ---
 
