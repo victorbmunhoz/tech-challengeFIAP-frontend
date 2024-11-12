@@ -11,6 +11,8 @@ import LoginPage from './pages/LoginPage';
 import Header from './components/Header';
 import ManageUsersPage from './pages/ManageUsersPage';
 import ManagePostsPage from './pages/ManagePostsPage';
+import NewUserPage from './pages/NewUserPage';
+import EditUserPage from './pages/EditUserPage';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useContext(AuthContext);
@@ -64,6 +66,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <ManagePostsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/new-user"
+            element={
+              <ProtectedRoute>
+                <NewUserPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-user/:userId"
+            element={
+              <ProtectedRoute>
+                <EditUserPage />
               </ProtectedRoute>
             }
           />

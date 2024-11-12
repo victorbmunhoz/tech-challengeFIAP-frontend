@@ -1,8 +1,8 @@
 // src/styles/theme.js
 const theme = {
     colors: {
-      primary: '#3498db',
-      secondary: '#2ecc71',
+      primary: '#72BF78',
+      secondary: '#A0D683',
       background: '#f5f5f5',
       text: '#333',
       danger: '#e74c3c',

@@ -1,18 +1,17 @@
-// src/pages/LoginPage.js
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { loginUser } from '../services/api';
+// src/pages/NewUserPage.js
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { createUser } from '../services/api';
+import BackButton from '../components/BackButton';
 import Container from '../styles/Container';
+import { useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
   max-width: 400px;
-  width: 100%;
-  margin: 50px auto;
+  margin: 0 auto;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 8px;
@@ -53,62 +52,45 @@ const Title = styled.h2`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const ErrorMessage = styled.p`
-  color: red;
-  text-align: center;
-  font-size: 0.9rem;
-`;
-
-function LoginPage() {
-  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+function NewUserPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
     try {
-      // Faça a requisição de login ao servidor
-      const data = await loginUser({ username, password });
-
-      if (data.message === 'Login successful') {
-        setIsAuthenticated(true);
-        setUser({ username, ...data.userDetails });
-        navigate('/admin');
-      } else {
-        setError('Credenciais inválidas');
-      }
+      await createUser({ username, password });
+      alert('Usuário criado com sucesso');
+      navigate('/manage-users');
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      setError('Erro ao fazer login');
+      console.error('Erro ao criar usuário:', error);
     }
   };
 
   return (
     <Container>
-      <Form onSubmit={handleLogin}>
-        <Title>Login</Title>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+      <BackButton />
+      <Form onSubmit={handleSubmit}>
+        <Title>Criar Novo Usuário</Title>
         <Input
           type="text"
-          placeholder="Username"
+          placeholder="Nome de usuário"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
         <Input
           type="password"
-          placeholder="Password"
+          placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit">Criar Usuário</Button>
       </Form>
     </Container>
   );
 }
 
-export default LoginPage;
+export default NewUserPage;

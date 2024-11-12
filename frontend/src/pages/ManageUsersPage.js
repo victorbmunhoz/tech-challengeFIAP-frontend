@@ -1,13 +1,103 @@
 // src/pages/ManageUsersPage.js
 import React, { useState, useEffect } from 'react';
-import { getUsers, createUser, updateUser, deleteUser } from '../services/api';
-import Button from '../components/Button';
+import styled from 'styled-components';
+import { getUsers, deleteUser } from '../services/api';
+import BackButton from '../components/BackButton';
+import Container from '../styles/Container';
+import { useNavigate } from 'react-router-dom';
+
+const Title = styled.h1`
+  text-align: center;
+  margin-bottom: 20px;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+const TableWrapper = styled.div`
+  overflow-x: auto; /* Permite rolagem horizontal em telas menores */
+  margin-top: 20px;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+`;
+
+const TableHead = styled.thead`
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 600;
+  }
+`;
+
+const TableBody = styled.tbody`
+  tr {
+    &:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    &:hover {
+      background-color: #f1f1f1;
+    }
+  }
+`;
+
+const TableRow = styled.tr`
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    color: ${({ theme }) => theme.colors.text};
+
+    &:last-child {
+      text-align: right; /* Alinha os botões à direita */
+    }
+  }
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primaryHover};
+  }
+
+  &.delete {
+    background-color: #ff4d4d;
+    &:hover {
+      background-color: #cc0000;
+    }
+  }
+
+  &.edit {
+    background-color: ${({ theme }) => theme.colors.secondary};
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.secondaryHover};
+    }
+  }
+`;
 
 function ManageUsersPage() {
   const [users, setUsers] = useState([]);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [editingUserId, setEditingUserId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUsers() {
@@ -15,80 +105,58 @@ function ManageUsersPage() {
         const data = await getUsers();
         setUsers(data);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Erro ao buscar usuários:', error);
       }
     }
     fetchUsers();
   }, []);
 
-  const handleCreateOrUpdateUser = async () => {
-    try {
-      if (editingUserId) {
-        await updateUser(editingUserId, { username, password });
-        alert('User updated successfully');
-      } else {
-        await createUser({ username, password });
-        alert('User created successfully');
-      }
-      setEditingUserId(null);
-      setUsername('');
-      setPassword('');
-      // Refetch users
-      const data = await getUsers();
-      setUsers(data);
-    } catch (error) {
-      console.error('Error creating/updating user:', error);
-    }
-  };
-
-  const handleEdit = (user) => {
-    setEditingUserId(user._id);
-    setUsername(user.username);
-    setPassword(user.password);
-  };
-
   const handleDelete = async (userId) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
+    if (window.confirm('Tem certeza que deseja excluir este usuário?')) {
       try {
         await deleteUser(userId);
-        alert('User deleted successfully');
-        // Refetch users
+        alert('Usuário excluído com sucesso');
         const data = await getUsers();
         setUsers(data);
       } catch (error) {
-        console.error('Error deleting user:', error);
+        console.error('Erro ao excluir usuário:', error);
       }
     }
   };
 
   return (
-    <div>
-      <h1>Manage Users</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button onClick={handleCreateOrUpdateUser}>
-        {editingUserId ? 'Update User' : 'Create User'}
-      </Button>
-      <ul>
-        {users.map((user) => (
-          <li key={user._id}>
-            {user.username}
-            <Button onClick={() => handleEdit(user)}>Edit</Button>
-            <Button onClick={() => handleDelete(user._id)}>Delete</Button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container>
+      <BackButton />
+      <Title>Gerenciar Usuários</Title>
+      <Button onClick={() => navigate('/new-user')}>Criar Novo Usuário</Button>
+      <TableWrapper>
+        <Table>
+          <TableHead>
+            <tr>
+              <th>Nome de Usuário</th>
+              <th>Ações</th>
+            </tr>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow key={user._id}>
+                <td>{user.username}</td>
+                <td>
+                  <ButtonsContainer>
+                    <Button className="edit" onClick={() => navigate(`/edit-user/${user._id}`)}>
+                      Editar
+                    </Button>
+                    <Button className="delete" onClick={() => handleDelete(user._id)}>
+                      Excluir
+                    </Button>
+                  </ButtonsContainer>
+                </td>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableWrapper>
+    </Container>
   );
 }
 

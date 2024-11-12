@@ -76,6 +76,17 @@ export const getUsers = async () => {
     const response = await api.get('/users');
     return response.data;
 };
+
+// Função para buscar um usuário por ID
+export const getUserById = async (userId) => {
+  try {
+    const response = await api.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar usuário por ID:', error);
+    throw error;
+  }
+};
   
 export const createUser = async (userData) => {
     const response = await api.post('/users', userData);

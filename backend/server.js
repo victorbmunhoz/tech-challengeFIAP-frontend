@@ -9,8 +9,33 @@ app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => {
+    console.log('Conectado ao MongoDB');
+    createInitialUser(); // Chama a função para criar o usuário inicial
+  })
   .catch((error) => console.error('Error connecting to MongoDB:', error));
+
+// Função para criar um usuário inicial
+async function createInitialUser() {
+  try {
+    // Verifica se o usuário "admin" já existe no banco de dados
+    const existingUser = await User.findOne({ username: 'admin' });
+    if (!existingUser) {
+      // Criação do usuário com a senha em texto simples
+      const newUser = new User({
+        username: 'fiap',
+        password: '12345', // Senha em texto simples (apenas para desenvolvimento)
+        role: 'admin'
+      });
+      await newUser.save();
+      console.log('Usuário inicial criado: fiap');
+    } else {
+      console.log('Usuário inicial já existe.');
+    }
+  } catch (error) {
+    console.error('Erro ao criar o usuário inicial:', error);
+  }
+}
 
 // Models
 const postSchema = new mongoose.Schema({
@@ -83,6 +108,20 @@ app.get('/api/users', async (req, res) => {
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching users' });
+  }
+});
+
+// Rota para buscar um usuário pelo ID
+app.get('/api/users/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    res.status(500).json({ message: 'Erro ao buscar usuário' });
   }
 });
 

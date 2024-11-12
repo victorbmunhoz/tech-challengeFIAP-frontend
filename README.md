@@ -1,6 +1,6 @@
 # Blog App - Projeto de Tech Challenge
 
-Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Challenge da sua formação em desenvolvimento Full Stack. Ele inclui uma interface front-end construída com React e um servidor back-end em Node.js com MongoDB.
+Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Challenge da formação em desenvolvimento Full Stack. Ele inclui uma interface front-end construída com React e um servidor back-end em Node.js com MongoDB.
 
 ---
 
@@ -60,7 +60,7 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
 ## Funcionalidades Principais
 
 - **Gestão de Usuários**: Criação, edição e exclusão de usuários (somente admin).
-- **Gestão de Posts**: Criação, edição e exclusão de posts.
+- **Gestão de Posts**: Criação, edição e exclusão de posts (somente admin).
 - **Autenticação**: Login e logout com controle de acesso às páginas protegidas.
 
 ---
@@ -71,11 +71,3 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
 - Para testar as rotas da API, você pode usar ferramentas como **Postman** ou **Insomnia**.
 
 ---
-
-## Contribuição
-
-Sinta-se à vontade para sugerir melhorias ou relatar problemas ao desenvolver o projeto.
-
----
-
-**Enjoy coding! 🚀**
