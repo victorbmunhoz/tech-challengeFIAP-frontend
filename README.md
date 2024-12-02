@@ -1,20 +1,42 @@
-# Blog App - Projeto de Tech Challenge
+# Blog App - Tech Challenge
 
-Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Challenge da formação em desenvolvimento Full Stack. Ele inclui uma interface front-end construída com React e um servidor back-end em Node.js com MongoDB.
+Este é um projeto de blog desenvolvido como parte do **Tech Challenge Full Stack**, utilizando **React** no front-end, **Node.js** no back-end e **MongoDB** como banco de dados. O projeto foi desenvolvido para oferecer uma experiência completa de gestão de posts e usuários, com autenticação e autorização.
 
 ---
 
-## Requisitos
+## Tecnologias Usadas
 
-- **Node.js** (versão 16.13)
-- **MongoDB** (instalado e em execução)
+- **Front-End**: React, Styled Components
+- **Back-End**: Node.js, Express.js, Mongoose
+- **Banco de Dados**: MongoDB
+- **Gerenciamento de Estado**: Context API
+- **Estilização**: Styled Components
+
+---
+
+## Funcionalidades
+
+### Front-End
+- **Página Inicial**: Lista de posts com busca por título.
+- **Detalhes do Post**: Exibe o conteúdo completo de um post.
+- **Gestão de Posts**: Criação, edição e exclusão (restrito a admins).
+- **Gestão de Usuários**: Criação, edição e exclusão de usuários (restrito a admins).
+- **Autenticação**: Login e logout com controle de acesso.
+
+### Back-End
+- **API RESTful** para interação com o banco de dados.
+- Criação automática de um usuário admin inicial (username: `fiap`, senha: `12345`).
+- Validação e tratamento de erros em todas as rotas.
 
 ---
 
 ## Como Rodar o Projeto
 
-### 1. Configurar e Rodar o BD e Back-End
+### Pré-requisitos
+- **Node.js** (>= 16.13)
+- **MongoDB** instalado e em execução.
 
+### Passo 1: Configuração do Back-End
 1. Navegue até o diretório do back-end:
    ```bash
    cd backend
@@ -23,27 +45,18 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
    ```bash
    npm install
    ```
-3. Certifique-se de que o MongoDB está rodando. Se estiver usando o MongoDB local, inicie-o:
-   ```bash
-   mongod
-   ```
-4. Configure a string de conexão com o MongoDB no arquivo `.env`:
+3. Configure o arquivo `.env` com a string de conexão do MongoDB:
    ```
    MONGO_URI=mongodb://localhost:27017/tech_challenge
+   PORT=5000
    ```
-5. Inicie o servidor:
+4. Inicie o servidor:
    ```bash
    npm start
    ```
-6. O back-end estará disponível em `http://localhost:5000`.
-   Usuário e senha iniciais serão criados e inseridos automáticamente no BD.
-   usuário: fiap
-   senha: 12345
+   O back-end estará disponível em `http://localhost:5000`.
 
----
-
-### 2. Configurar e Rodar o Front-End
-
+### Passo 2: Configuração do Front-End
 1. Navegue até o diretório do front-end:
    ```bash
    cd frontend
@@ -52,25 +65,21 @@ Este é um projeto de um aplicativo de blog desenvolvido como parte do Tech Chal
    ```bash
    npm install
    ```
-3. Inicie o servidor de desenvolvimento do React:
+3. Inicie o servidor de desenvolvimento:
    ```bash
    npm start
    ```
-4. O front-end estará disponível em `http://localhost:3000`.
-
----
-
-## Funcionalidades Principais
-
-- **Gestão de Usuários**: Criação, edição e exclusão de usuários (somente admin).
-- **Gestão de Posts**: Criação, edição e exclusão de posts (somente admin).
-- **Autenticação**: Login e logout com controle de acesso às páginas protegidas.
+   O front-end estará disponível em `http://localhost:3000`.
 
 ---
 
 ## Notas Adicionais
 
-- Use **MongoDB Compass** ou **Mongo Shell** para visualizar e gerenciar o banco de dados.
-- Para testar as rotas da API, você pode usar ferramentas como **Postman** ou **Insomnia**.
+- Use **MongoDB Compass** para visualizar os dados do banco.
+- Para testar as rotas do back-end, utilize ferramentas como **Postman** ou **Insomnia**.
 
 ---
+
+## Contribuidores
+
+- Desenvolvedor: **Victor Munhoz**

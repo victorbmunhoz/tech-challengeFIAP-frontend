@@ -1,104 +1,113 @@
-// src/services/api.js
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // URL do seu back-end
+  baseURL: 'http://localhost:5000/api', // URL do back-end
 });
 
 export default api;
 
-// Função para buscar todos os posts
+// Utilitário para tratar erros de requisição
+const handleApiError = (error, context) => {
+  console.error(`Error in ${context}:`, error.response?.data || error.message);
+  throw error;
+};
+
+// Funções relacionadas a Posts
 export const getPosts = async () => {
   try {
     const response = await api.get('/posts');
     return response.data;
   } catch (error) {
-    console.error('Error fetching posts:', error);
-    throw error;
+    handleApiError(error, 'getPosts');
   }
 };
 
-// Função para buscar um post por ID
 export const getPostById = async (postId) => {
   try {
     const response = await api.get(`/posts/${postId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching post:', error);
-    throw error;
+    handleApiError(error, 'getPostById');
   }
 };
 
-// Função para criar um novo post
 export const createPost = async (postData) => {
   try {
     const response = await api.post('/posts', postData);
     return response.data;
   } catch (error) {
-    console.error('Error creating post:', error);
-    throw error;
+    handleApiError(error, 'createPost');
   }
 };
 
-// Função para atualizar um post existente
 export const updatePost = async (postId, postData) => {
   try {
     const response = await api.put(`/posts/${postId}`, postData);
     return response.data;
   } catch (error) {
-    console.error('Error updating post:', error);
-    throw error;
+    handleApiError(error, 'updatePost');
   }
 };
 
-// Função para deletar um post
 export const deletePost = async (postId) => {
   try {
     await api.delete(`/posts/${postId}`);
   } catch (error) {
-    console.error('Error deleting post:', error);
-    throw error;
+    handleApiError(error, 'deletePost');
   }
 };
 
-// Função para autenticar um usuário (exemplo)
+// Funções relacionadas a Usuários
 export const loginUser = async (credentials) => {
-    try {
-      const response = await api.post('/users/login', credentials);
-      return response.data;
-    } catch (error) {
-      console.error('Error logging in:', error);
-      throw error;
-    }
-  };
-
-export const getUsers = async () => {
-    const response = await api.get('/users');
+  try {
+    const response = await api.post('/users/login', credentials);
     return response.data;
+  } catch (error) {
+    handleApiError(error, 'loginUser');
+  }
 };
 
-// Função para buscar um usuário por ID
+export const getUsers = async () => {
+  try {
+    const response = await api.get('/users');
+    return response.data;
+  } catch (error) {
+    handleApiError(error, 'getUsers');
+  }
+};
+
 export const getUserById = async (userId) => {
   try {
     const response = await api.get(`/users/${userId}`);
     return response.data;
   } catch (error) {
-    console.error('Erro ao buscar usuário por ID:', error);
-    throw error;
+    handleApiError(error, 'getUserById');
   }
 };
-  
+
 export const createUser = async (userData) => {
+  try {
     const response = await api.post('/users', userData);
     return response.data;
+  } catch (error) {
+    handleApiError(error, 'createUser');
+  }
 };
-  
+
 export const updateUser = async (userId, userData) => {
+  try {
     const response = await api.put(`/users/${userId}`, userData);
     return response.data;
+  } catch (error) {
+    handleApiError(error, 'updateUser');
+  }
 };
-  
+
 export const deleteUser = async (userId) => {
+  try {
     const response = await api.delete(`/users/${userId}`);
     return response.data;
+  } catch (error) {
+    handleApiError(error, 'deleteUser');
+  }
 };

@@ -1,4 +1,3 @@
-// src/pages/HomePage.js
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PostCard from '../components/PostCard';
@@ -78,11 +77,12 @@ function HomePage() {
       {filteredPosts.length > 0 ? (
         <PostsGrid>
           {filteredPosts.map(post => (
-            <PostCard key={post.id} post={post} />
+            // Corrigido para usar uma `key` única e válida
+            <PostCard key={post._id || post.id} post={post} />
           ))}
         </PostsGrid>
       ) : (
-        <NoPostsMessage>nenhum post disponível</NoPostsMessage>
+        <NoPostsMessage>Nenhum post disponível</NoPostsMessage>
       )}
     </Container>
   );

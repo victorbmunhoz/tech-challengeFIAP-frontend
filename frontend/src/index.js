@@ -1,15 +1,19 @@
-// src/index.js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'; // Importa a nova API do ReactDOM
 import { ThemeProvider } from 'styled-components';
 import App from './App';
 import GlobalStyles from './styles/GlobalStyles';
 import theme from './styles/theme';
 
-ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <GlobalStyles />
-    <App />
-  </ThemeProvider>,
-  document.getElementById('root')
+// Cria a raiz do React 18
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Renderiza o aplicativo
+root.render(
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
 );

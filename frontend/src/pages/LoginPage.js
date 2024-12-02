@@ -1,4 +1,3 @@
-// src/pages/LoginPage.js
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
@@ -68,21 +67,23 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError(''); // Limpa mensagens de erro anteriores
+
     try {
-      // Faça a requisição de login ao servidor
+      // Chama a função de login do serviço API
       const data = await loginUser({ username, password });
 
-      if (data.message === 'Login successful') {
-        setIsAuthenticated(true);
-        setUser({ username, ...data.userDetails });
-        navigate('/admin');
+      // Verifica a resposta do servidor
+      if (data?.message === 'Login bem-sucedido') {
+        setIsAuthenticated(true); // Marca o usuário como autenticado
+        setUser({ username }); // Atualiza o contexto com o nome de usuário
+        navigate('/admin'); // Redireciona para a página admin
       } else {
-        setError('Credenciais inválidas');
+        setError(data?.error || 'Credenciais inválidas'); // Mensagem padrão de erro
       }
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      setError('Erro ao fazer login');
+    } catch (err) {
+      console.error('Erro ao fazer login:', err);
+      setError('Erro ao conectar ao servidor. Tente novamente.');
     }
   };
 
